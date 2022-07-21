@@ -1,0 +1,30 @@
+# 
+# https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-codebuild-project.html
+# 
+Resources:
+  CodeBuildProject:
+    Type: AWS::CodeBuild::Project
+    Properties:
+      Name: build-demo-yml
+      ServiceRole: arn:aws:iam::992063419099:role/service-role/codebuild-ts-actions-service-role
+      Artifacts:
+        Type: NO_ARTIFACTS
+      Environment:
+        Type: LINUX_CONTAINER
+        ComputeType: BUILD_GENERAL1_SMALL
+        Image: aws/codebuild/standard:4.0
+        EnvironmentVariables:
+          - Name: WebAppBucket
+            Value: lshumlich-ts-actions
+      Source:
+        Type: GITHUB
+        Location: https://github.com/lshumlich/ts-actions.git
+      SourceVersion: demo
+      Triggers:
+        Webhook: true
+        FilterGroups:
+          - - Type: EVENT
+              Pattern: PUSH
+            - Type: HEAD_REF
+              Pattern: demo
+              # ExcludeMatchedPattern: false
