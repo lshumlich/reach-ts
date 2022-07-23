@@ -5,8 +5,10 @@ Resources:
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
     Properties:
-      Name: build-demo-yml
-      ServiceRole: arn:aws:iam::992063419099:role/service-role/codebuild-ts-actions-service-role
+      Name: deploy-build-yml
+      # ServiceRole: !GetAtt DeployRole.Arn
+      # ServiceRole: !GetAtt ServiceRole.Arn
+      ServiceRole: arn:aws:iam::992063419099:role/code-build
       Artifacts:
         Type: NO_ARTIFACTS
       Environment:
@@ -15,10 +17,10 @@ Resources:
         Image: aws/codebuild/standard:4.0
         EnvironmentVariables:
           - Name: WebAppBucket
-            Value: lshumlich-ts-actions
+            Value: demosite2-leanminds
       Source:
         Type: GITHUB
-        Location: https://github.com/lshumlich/ts-actions.git
+        Location: https://github.com/lshumlich/react-ts.git
       SourceVersion: demo
       Triggers:
         Webhook: true

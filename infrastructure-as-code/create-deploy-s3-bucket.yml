@@ -5,7 +5,7 @@ Resources:
   S3Bucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: demosite-leanminds
+      BucketName: demosite2-leanminds
       AccessControl: PublicRead
       WebsiteConfiguration:
         IndexDocument: index.html
