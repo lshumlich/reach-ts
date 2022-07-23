@@ -32,9 +32,9 @@ phases:
       - aws s3 cp --recursive --acl public-read ./build s3://${WebAppBucket}/
       # - aws s3 cp --recursive --acl public-read ./docs s3://${WebAppBucket}/docs
       # - aws s3 cp --recursive --acl public-read ./coverage s3://${WebAppBucket}/coverage
-reports:
-  junit_reports:
-    files:
-      - junit.xml
-    base-directory: .
-    file-format: JUNITXML
+# reports:
+#   junit_reports:
+#     files:
+#       - junit.xml
+#     base-directory: .
+#     file-format: JUNITXML
