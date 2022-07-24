@@ -1,14 +1,22 @@
 
-## GitHub section
+## AWS Build and Deploy
 
-to setup from scratch:
-1. setup s3 bucket 
+This section describes how to setup the AWS build environment. Build and deploys
+are done on specific branches: main, demo, and dev. 
+
+To setup from scratch:
+
+1. Setup a role with the appropriate permissions to own the build process.
+    - using the AWS console setup a role called "build-role"
+    - create a new policy called codebuild from codebuild-iam-role.json
+    - attach the new policy and AmazonS3FullAccess to the new role
+1. Setup s3 bucket 
     - edit create-deploy-s3-bucket.yml and set the BucketName
     - in the commands section (this doc) create-stack 
         - change the stack-name
         - change the file name
     - run the command for the correct profile
-2. setup build job
+1. Setup build job
     - edit create-deploy-build.jml
         - change WebAppBucket value -> to bucket name
         - change GITHUB Location: -> to GitHub repository

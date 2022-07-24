@@ -12,7 +12,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <button onClick={pushMe} className='lfs-button'>Push me Main...</button>
+        <button onClick={pushMe} className='lfs-button'>Push me Main...v2</button>
       </header>
     </div>
   );

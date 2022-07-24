@@ -1,6 +1,6 @@
 #
 # This requires the following environment variables are set:
-#   WebAppBucket - 	mybucket-name
+#   WebAppBucket - 	reduction-pathways
 #
 version: 0.2
 
@@ -8,12 +8,33 @@ phases:
   pre_build:
     commands:
       - echo Installing source NPM dependencies...
-      - echo CODEBUILD_SOURCE_VERSION - ${CODEBUILD_SOURCE_VERSION}
-      - echo CODEBUILD_RESOLVED_SOURCE_VERSION - ${CODEBUILD_RESOLVED_SOURCE_VERSION}
-      - echo CODEBUILD_SOURCE_REPO_URL - ${CODEBUILD_SOURCE_REPO_URL}
-      - echo CODEBUILD_WEBHOOK_TRIGGER - ${CODEBUILD_WEBHOOK_TRIGGER}
+      - echo ${CODEBUILD_SOURCE_VERSION}
+      - echo ${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - echo ${CODEBUILD_SOURCE_REPO_URL}
+      - npm install
   build:
     # on-failure: ABORT
     commands:
+      - echo Build started on `date`
+      - echo Build
+      - npm run build
+      # - echo Docs
+      # - npm run docs
+      # - echo Unit Tests
+      # - npm run junit
+      # - echo Coverage - We should be able to combine with unit testing
+      # - npm run test -- --coverage --watchAll=false
+  post_build:
+    # on-failure: ABORT
+    commands:
       - aws s3 rm s3://${WebAppBucket} --recursive
-      - aws s3 cp --recursive --acl public-read . s3://${WebAppBucket}/
+      # - aws s3 cp --recursive --acl public-read ./dev s3://${WebAppBucket}/dev
+      - aws s3 cp --recursive --acl public-read ./build s3://${WebAppBucket}/
+      # - aws s3 cp --recursive --acl public-read ./docs s3://${WebAppBucket}/docs
+      # - aws s3 cp --recursive --acl public-read ./coverage s3://${WebAppBucket}/coverage
+# reports:
+#   junit_reports:
+#     files:
+#       - junit.xml
+#     base-directory: .
+#     file-format: JUNITXML

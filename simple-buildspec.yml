@@ -1,0 +1,19 @@
+#
+# This requires the following environment variables are set:
+#   WebAppBucket - 	mybucket-name
+#
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - echo Installing source NPM dependencies...
+      - echo CODEBUILD_SOURCE_VERSION - ${CODEBUILD_SOURCE_VERSION}
+      - echo CODEBUILD_RESOLVED_SOURCE_VERSION - ${CODEBUILD_RESOLVED_SOURCE_VERSION}
+      - echo CODEBUILD_SOURCE_REPO_URL - ${CODEBUILD_SOURCE_REPO_URL}
+      - echo CODEBUILD_WEBHOOK_TRIGGER - ${CODEBUILD_WEBHOOK_TRIGGER}
+  build:
+    # on-failure: ABORT
+    commands:
+      - aws s3 rm s3://${WebAppBucket} --recursive
+      - aws s3 cp --recursive --acl public-read . s3://${WebAppBucket}/
